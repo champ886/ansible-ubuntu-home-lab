@@ -1,0 +1,34 @@
+---
+- name: Configure Multiple Cisco IOS Interfaces
+  hosts: cisco_routers
+  gather_facts: no
+  connection: network_cli
+  vars_files:
+    - /home/champ/ansible/CSR8.yml
+    - /home/champ/ansible/CSR9.yml
+    - /home/champ/ansible/CSR10.yml         # Router-specific variables
+  tasks:
+    - name: Configure multiple interfaces with different IPs
+      ios_config:
+        src: interface_config_template.j2
+        save_when: modified
+    
+    - name: Show running config
+      ios_command:
+        commands:
+          - show running-config
+      register: run_config
+
+    - name: Show interface config
+      ios_command:
+        commands:
+          - show ip int bri
+      register: int_config
+
+    - name: print running config output
+      debug:
+          msg: "{{ run_config.stdout_lines }}"
+
+    - name: print int config
+      debug:
+          var: int_config.stdout_lines

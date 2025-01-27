@@ -1,0 +1,18 @@
+---
+- name: Show running configuration on Cisco device
+  hosts: cisco_routers
+  gather_facts: no
+  connection: network_cli
+  become: true
+  tasks:
+    - name: Execute 'show running-config' command on Cisco device
+      cisco.ios.ios_command:
+        commands:
+          - show running-config
+      register: running_config_output
+      
+
+    - name: Display the output of 'show running-config' command
+      debug:
+        # var: running_config_output.stdout
+        msg: "{{ running_config_output.stdout | join('\n') }}"

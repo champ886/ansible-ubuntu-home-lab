@@ -1,0 +1,14 @@
+-
+  name: install NGINX
+  hosts: myAnsibleServer
+  become: yes
+  tasks:
+      - name: Install NGINX
+        yum:
+                name: nginx
+                state: present
+
+      - name: Start web server
+        service:
+                name: nginx
+                state: started

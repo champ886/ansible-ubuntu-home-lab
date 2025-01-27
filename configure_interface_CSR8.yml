@@ -1,0 +1,28 @@
+---
+
+- name: COnfigure interfaces CSR8
+  hosts: cisco_routers
+  gather_facts: no
+  connection: network_cli
+  become: true
+  tasks:
+
+  - name: Merge provided configuration with device configuration
+    cisco.ios.ios_l3_interfaces:
+      config:
+        - name: GigabitEthernet2
+          ipv4:
+          - address: 192.168.50.1/24
+        - name: GigabitEthernet3
+          ipv4:
+          - address: 192.168.20.1/24
+      state: merged
+  
+  - name: show running config
+    cisco.ios.ios_command:
+      commands: show running-config | sect interface
+    register: run_conf_output
+
+  - name: Display Output
+    debug:
+        msg: "{{ run_conf_output.stdout_lines }}"
