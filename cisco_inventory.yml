@@ -1,0 +1,21 @@
+all:
+  children:
+    cisco_routers:
+      hosts:
+       CSR8:
+        ansible_host: 192.168.0.121
+        ansible_user: admin
+        ansible_password: admin
+        ansible_network_os: cisco.ios.ios
+        interfaces:
+          - { interface: "GigabitEthernet2", ip: "192.168.50.1", mask: "255.255.255.0" }
+          - { interface: "GigabitEthernet3", ip: "10.0.0.1", mask: "255.255.255.0" }
+
+       CSR9:
+        ansible_host: 192.168.0.122
+        ansible_user: admin
+        ansible_password: admin
+        ansible_network_os: cisco.ios.ios
+        interfaces:
+          - { interface: "GigabitEthernet2", ip: "192.168.50.2", mask: "255.255.255.0" }
+          - { interface: "GigabitEthernet3", ip: "10.1.0.1", mask: "255.255.255.0" }
