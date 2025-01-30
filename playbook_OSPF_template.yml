@@ -1,0 +1,31 @@
+- name: Configure OSPF on Cisco Routers
+  hosts: CSR8
+  gather_facts: no
+  vars_files:
+    - /home/champ/ansible/ospf_var.yml
+  tasks:
+    - name: Enable OSPF Routing Process with Loop Variables
+      cisco.ios.ios_config:
+        src: OSPF_config_router_process.j2
+      register: ospf_result
+    
+    - name: stdout  run ospf
+      ios_command:
+        commands:
+          - show run | sect ospf
+      register: show_run
+
+    - name: debug or show show run
+      debug:
+        var: show_run.stdout_lines
+
+    - name: Verify OSPF Neighbors
+      cisco.ios.ios_command:
+        commands:
+          - "show ip ospf neighbor"
+      register: ospf_output
+
+    - name: Display OSPF Neighbor Output
+      debug:
+        msg: "{{ ospf_output.stdout_lines }}"
+
