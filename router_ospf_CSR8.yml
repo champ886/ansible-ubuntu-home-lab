@@ -1,0 +1,28 @@
+- name: Configure OSPF on Cisco Routers
+  hosts: CSR8
+  gather_facts: no
+  tasks:
+    - name: Enable OSPF Routing Process with Loop Variables
+      cisco.ios.ios_config:
+        lines:
+          - "router ospf 1"
+        parents: []
+      register: ospf_result
+
+    - name: Configure OSPF Networks
+      cisco.ios.ios_config:
+        lines:
+          - "network 192.168.50.0 0.0.0.255  area 0"
+        parents:
+          - "router ospf 1"
+
+    - name: Verify OSPF Neighbors
+      cisco.ios.ios_command:
+        commands:
+          - "show ip ospf neighbor"
+      register: ospf_output
+
+    - name: Display OSPF Neighbor Output
+      debug:
+        msg: "{{ ospf_output.stdout_lines }}"
+

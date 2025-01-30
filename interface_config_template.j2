@@ -1,6 +1,5 @@
 {% for item in interfaces %}
 interface {{ item.interface }}
- description {{ item.description }}
- ip address {{ item.ip }} 255.255.255.0
+ ip address {{ item.ip }} {{ item.mask }}
  no shutdown
 {% endfor %}

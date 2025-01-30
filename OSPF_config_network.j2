@@ -1,0 +1,5 @@
+{% for item in ospf_networks %}
+ network {{ item.network }}
+ wildcard {{ item.wildcard }}
+ area {{ item.area }}
+{% endfor %}
