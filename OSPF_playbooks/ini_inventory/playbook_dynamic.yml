@@ -1,0 +1,30 @@
+---
+- name: Configure OSPF on Cisco Routers using Jinja2 Templates
+  hosts: cisco_routers
+  gather_facts: no
+  tasks:
+    - name: Generate OSPF configuration from Jinja2 template
+      template:
+        src: templates/ospf.j2
+        dest: /tmp/{{ inventory_hostname }}_ospf.cfg
+
+    - name: Apply OSPF configuration to the router
+      ios_config:
+        src: /tmp/{{ inventory_hostname }}_ospf.cfg
+        save_when: modified
+      register: config_result
+
+    - name: Debug configuration result
+      debug:
+        var: config_result
+    
+    - name: show ospf neighbours
+      ios_command:
+        commands:
+          - show run | sect ospf
+          - show ip route ospf
+          - show ip ospf neigh
+      register: show_ospf_info
+
+    - debug:
+        var: show_ospf_info.stdout_lines
