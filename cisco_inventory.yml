@@ -18,4 +18,15 @@ all:
         ansible_network_os: cisco.ios.ios
         interfaces:
           - { interface: "GigabitEthernet2", ip: "192.168.50.2", mask: "255.255.255.0" }
+          - { interface: "GigabitEthernet3", ip: "192.168.60.1", mask: "255.255.255.0" }
+
+
+       CSR10:
+        ansible_host: 192.168.0.123
+        ansible_user: admin
+        ansible_password: admin
+        ansible_network_os: cisco.ios.ios
+        interfaces:
+          - { interface: "GigabitEthernet2", ip: "192.168.60.2", mask: "255.255.255.0" }
           - { interface: "GigabitEthernet3", ip: "10.1.0.1", mask: "255.255.255.0" }
+
