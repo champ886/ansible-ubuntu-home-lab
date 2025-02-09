@@ -1,0 +1,32 @@
+hostname {{ hostname }}
+
+{% for vlan in vlans %}
+vlan {{ vlan.vlan_id }}
+  name {{ vlan.vlan_name }}
+!
+{% endfor %}
+
+
+
+{% for net in vlan_config %}
+interface {{ net.name }}
+  switchport mode {{ net.switchport_mode_access }}
+  switchport access vlan {{ net.vlan_access }}
+!
+{% endfor %}
+
+
+{% for trunk in trunk_ports %}
+interface {{ trunk.interface }}
+  switchport trunk encapsulation {{ trunk.switchport_encapsulation }}  
+  switchport mode {{ trunk.mode }}
+!
+{% endfor %}
+
+
+{% for conf in svi %}
+interface vlan {{ conf.int_name }}
+  ip address {{ conf.ip_address }} {{ conf.mask }}
+  no shutdown
+!
+{% endfor %}
