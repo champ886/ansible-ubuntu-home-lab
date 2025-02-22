@@ -5,7 +5,7 @@ pipeline {
         ANSIBLE_HOST = '192.168.0.110'
         ANSIBLE_USER = 'champ'
         ANSIBLE_PLAYBOOK = '/home/champ/ansible/ansible-ubuntu-home-lab/router_playbook_template_02.yml'
-        ANSIBLE_INVENTORY = '/home/champ/ansible/ansible-ubuntu-home-labcisco_inventory.yml'
+        ANSIBLE_INVENTORY = '/home/champ/ansible/ansible-ubuntu-home-lab/cisco_inventory.yml'
     }
 
     stages {
