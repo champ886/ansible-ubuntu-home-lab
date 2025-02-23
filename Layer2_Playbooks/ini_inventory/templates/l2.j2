@@ -31,7 +31,22 @@ interface vlan {{ conf.int_name }}
 !
 {% endfor %}
 
-{% for dmp in interface_for_DMP %}
+{% for int in DMP %}
+interface  {{ int }}
+  description DMP
+  switchport access vlan 100
+  switchport mode access
+  switchport port-security maximum 2
+  switchport port-security violation restrict
+  switchport port-security
+  ip arp inspection trust
+  ip arp inspection limit rate 100
+  no logging event link-status
+  load-interval 30
+{% endfor %}
+
+{# Commening this section out .. uses interface rnage command #}
+{# {% for dmp in interface_for_DMP %}
 interface range {{ dmp.interfaces }}
   description {{ dmp.description }}
   switchport access vlan 100
@@ -43,4 +58,4 @@ interface range {{ dmp.interfaces }}
   ip arp inspection limit rate 100
   no logging event link-status
   load-interval 30
-{% endfor %}
+{% endfor %} #}

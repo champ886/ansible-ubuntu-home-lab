@@ -12,7 +12,7 @@ trunk_ports:
      
 interface_for_DMP:
   - interfaces: GigabitEthernet1/0-2
-    description: DMP
+    # description: DMP
     # switchport_mode: access
     # switchport: access
     # switchport_sec: maximum 2
@@ -25,3 +25,8 @@ interface_for_DMP:
     # storm_control: 10.00
     # span_tree: portfast
     # span_tree: bpdu
+
+DMP:
+  - GigabitEthernet1/0
+  - GigabitEthernet1/1
+  - GigabitEthernet1/2
