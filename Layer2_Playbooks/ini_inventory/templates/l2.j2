@@ -30,3 +30,17 @@ interface vlan {{ conf.int_name }}
   no shutdown
 !
 {% endfor %}
+
+{% for dmp in interface_for_DMP %}
+interface range {{ dmp.interfaces }}
+  description {{ dmp.description }}
+  switchport access vlan 100
+  switchport mode access
+  switchport port-security maximum 2
+  switchport port-security violation restrict
+  switchport port-security
+  ip arp inspection trust
+  ip arp inspection limit rate 100
+  no logging event link-status
+  load-interval 30
+{% endfor %}

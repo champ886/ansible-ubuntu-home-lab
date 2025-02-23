@@ -24,6 +24,7 @@
             - show int trunk
             - show vlan bri
             - show ip int bri
+            - show run int G1/0
       register: l2_output
 
 
