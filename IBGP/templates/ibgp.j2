@@ -1,0 +1,8 @@
+interface loopback 0
+    ip address {{ int_loopback }} 255.255.255.255
+
+router bgp {{ router_ibgp }}
+    network {{int_loopback}} mask 255.255.255.255
+    {% for neigh in neighbor %}
+    neighbor {{ neigh }} remote-as 100
+    {% endfor %}
