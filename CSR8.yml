@@ -1,3 +1,0 @@
-interfaces:
-  - { interface: GigabitEthernet2, description: "LAN Interface", ip: "192.168.50.1", netmask: "255.255.255.0" }
-
