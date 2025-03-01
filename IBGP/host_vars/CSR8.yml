@@ -1,0 +1,6 @@
+hostname: CSR8
+int_loopback: 1.1.1.1
+
+neighbor:
+- 2.2.2.2
+- 3.3.3.3

@@ -1,0 +1,6 @@
+hostname: CSR9
+int_loopback: 2.2.2.2
+
+neighbor:
+- 1.1.1.1
+- 3.3.3.3
