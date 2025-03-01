@@ -1,0 +1,33 @@
+---
+- name: Configure Layer2  on Cisco Routers using Jinja2 Templates
+  hosts: cisco_switches                      #==> all hosts inventory
+  gather_facts: no
+  tasks:
+    - name: Generate L2  configuration from Jinja2 template
+      template:                             # Ansible template directive
+        src: templates/l2.j2              # ==> ref template
+        dest: /tmp/{{ inventory_hostname }}_int.cfg # ==> saves in ansible temp folder
+
+    - name: Apply L2 configuration to the router
+      ios_config:
+        src: /tmp/{{ inventory_hostname }}_int.cfg # ==> picks it up from temp and applies it to inventory hostname
+        save_when: modified
+      register: config_result
+
+    - name: show config result
+      debug:
+        msg: "{{ config_result }}"
+
+    - name: save l2 config output
+      ios_command:
+        commands:
+            - show int trunk
+            - show vlan bri
+            - show ip int bri
+            - show run int G1/0
+      register: l2_output
+
+
+    - name: show l2 output via debug
+      debug:
+        var: l2_output.stdout_lines

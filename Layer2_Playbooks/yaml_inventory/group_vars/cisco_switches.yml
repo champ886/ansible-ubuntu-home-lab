@@ -1,0 +1,12 @@
+vlans:
+   - vlan_id: 10
+     vlan_name: Ten
+   - vlan_id: 11
+     vlan_name: Eleven
+
+trunk_ports:
+   - interface: Gi0/0
+     switchport_encapsulation: dot1q
+     mode: trunk
+     allowed_vlans: all
+     

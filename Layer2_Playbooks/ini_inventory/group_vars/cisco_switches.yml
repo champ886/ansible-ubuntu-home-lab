@@ -1,0 +1,32 @@
+vlans:
+   - vlan_id: 10
+     vlan_name: Ten
+   - vlan_id: 11
+     vlan_name: Eleven
+
+trunk_ports:
+   - interface: Gi0/0
+     switchport_encapsulation: dot1q
+     mode: trunk
+     allowed_vlans: all
+     
+interface_for_DMP:
+  - interfaces: GigabitEthernet1/0-2
+    # description: DMP
+    # switchport_mode: access
+    # switchport: access
+    # switchport_sec: maximum 2
+    # switchport_sec_violate: restrict
+    # ip_arp_inspection: trust
+    # ip_arp_inspection_limit_rate: 100
+    # load_interval: 30
+    # snmp_trap_mac: change added
+    # snmp_trap_mac: change removed
+    # storm_control: 10.00
+    # span_tree: portfast
+    # span_tree: bpdu
+
+DMP:
+  - GigabitEthernet1/0
+  - GigabitEthernet1/1
+  - GigabitEthernet1/2

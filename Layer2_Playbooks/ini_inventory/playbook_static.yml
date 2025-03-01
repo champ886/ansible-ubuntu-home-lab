@@ -1,0 +1,52 @@
+---
+- hosts: cisco_switches
+  gather_facts: false  # Recommended for Cisco devices
+  connection: network_cli
+
+  tasks:
+  - name: configure vlans
+    cisco.ios.ios_config:
+      lines:
+        - Vlan 11
+        - vlan 10
+      save_when: modified
+
+  - name: configure vlan name
+    cisco.ios.ios_config:
+      lines:
+        - name Veelan10
+      parents: vlan 10
+  
+  - name: configure vlan 11 interfaces
+    ios_config:
+      lines:
+        - switchport mode access
+        - switchport access vlan 11
+      parents: interface Gi0/2
+
+  - name: configgure vlan 10 interfaces
+    ios_config:
+      lines:
+        - switchport mode access
+        - switchport access vlan 10
+      parents: interface Gi0/3
+
+  - name: Configure trunking
+    cisco.ios.ios_config:
+      lines:
+        - switchport trunk encap dot1q
+        - switchport mode trunk
+        - switchport trunk allowed vlan all
+      parents: interface gigabitEthernet 0/0
+
+  - name: save show to debug
+    cisco.ios.ios_command:
+      commands:
+        - show vlan bri
+        - show int trunk
+    register: show_stuff_output
+
+  - name: debug
+    debug:
+      var: show_stuff_output.stdout_lines
+  

@@ -1,0 +1,17 @@
+hostname: switch11
+vlan_config:
+  - name: GigabitEthernet0/3
+    vlan_access: 10
+    switchport_mode_access: access
+  - name: GigabitEthernet0/2
+    switchport_mode_access: access
+    vlan_access: 11
+
+
+svi:
+  - int_name: 10
+    ip_address: 192.168.10.1
+    mask: 255.255.255.0
+  - int_name: 11
+    ip_address: 192.168.11.1
+    mask: 255.255.255.0
