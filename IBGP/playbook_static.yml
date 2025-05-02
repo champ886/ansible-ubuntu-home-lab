@@ -1,0 +1,40 @@
+---
+- name: Configure OSPF on Cisco Routers
+  hosts: cisco_routers
+  gather_facts: no 
+ 
+  tasks:
+    - name: Configure OSPF on the router
+      ios_config:
+        lines:
+          - router ospf 1
+         # - network 192.168.50.0 0.0.0.255 area 0
+         # - network 10.0.0.0 0.0.0.255 area 0
+        parents: [ ]
+       # save_when: modified
+    
+    - name: config ospf network
+      ios_config:
+        lines:
+          - network 192.168.50.0 0.0.0.255 area 0
+          - network 10.0.0.0 0.0.0.255 area 0
+        parents: 
+          - router ospf 1
+       # save: when_modified
+
+    - name: save ospf
+      ios_command:
+         commands: 
+           - "show running-config | sect ospf" 
+      register: ospf_output
+    
+    - name: show neighborship
+      ios_command:
+        commands:
+          - show ip ospf neigh
+      register: ospf_neigh
+    - name: show ospf
+      debug:
+        msg: 
+         - "{{ ospf_output.stdout_lines }}"
+         - "{{ ospf_neigh.stdout_lines }}"

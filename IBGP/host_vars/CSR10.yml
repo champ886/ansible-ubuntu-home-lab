@@ -1,0 +1,6 @@
+hostname: CSR10
+int_loopback: 3.3.3.3
+
+neighbor:
+- 2.2.2.2
+- 1.1.1.1
